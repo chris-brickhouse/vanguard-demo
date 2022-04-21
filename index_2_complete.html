@@ -10,34 +10,33 @@
 
     <!-- title is what is displayed in browser tab and header-->
     <title>Adventure Time Fan Site</title>
+
+    <!-- show them font awesome from cdn for news -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
+        /* reset body */
         html,
         body {
-            /* reset body */
             margin: 0;
             padding: 0;
         }
 
+        /* body background */
         body {
             width: 100%;
             height: 100%;
             background: url('images/background.jpg') no-repeat center center fixed;
         }
 
+        /* set container to be 1024 wide. margins center it */
         .container {
             width: 1024px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .full {
-            width: 100%;
-        }
-
-        .header {
-            width: 100%;
-        }
-
+        .header,
         .header img {
             width: 100%;
         }
@@ -59,42 +58,246 @@
         .content-inner h3 {
             color: #009DDA;
         }
+
+        h1 {
+            margin: 0;
+        }
+
+        #nav {
+            display: inline-block;
+            width: 100%;
+            background: #4B8670;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            border: 1px solid #64AF5A;
+        }
+
+        #nav li a {
+            padding: 10px 15px;
+            float: left;
+            text-decoration: none;
+            border-right: 1px solid #25594B;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .news {
+            display: inline-block;
+            width: 100%;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            /* demonstrate cascading */
+            margin-top: 5px;
+            border-top: 1px solid #c0c0c0;
+            border-left: 1px solid #c0c0c0;
+            border-right: 1px solid #c0c0c0;
+            border-radius: 5px;
+        }
+
+        .news li {
+            padding: 10px;
+            border-bottom: 1px solid #c0c0c0;
+            background: #efefef;
+            border-radius: 5px;
+        }
+
+        .news i {
+            margin-right: 7px;
+            color: #6e6e6e;
+        }
+
+        .last {
+            border-right: none !important;
+        }
+
+        #nav li a:hover {
+            background: #8ad6ba;
+            color: rgb(41, 40, 40);
+        }
+
+        .active {
+            background: #CD292B;
+            color: #efefef;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        label {
+            clear: both;
+            width: 150px;
+            float: left;
+        }
+
+        input,
+        textarea,
+        select {
+            padding: 7px;
+            border-radius: 6px;
+            border: 1px solid #c0c0c0;
+            min-width: 250px;
+        }
+
+        .form-field {
+            margin: 10px 0px;
+        }
+
+        .btn {
+            background: #7181A9;
+            color: rgb(214, 212, 212);
+            font-weight: bold;
+            border: 1px solid rgb(109, 107, 107);
+            border-radius: 6px;
+            padding: 6px;
+        }
+
+        .form-inline {
+            padding: 15px 0px;
+        }
     </style>
+
+    <script type="text/javascript">
+        function changePage(name, item) {
+            // demonstrate debugging
+            console.log(item);
+
+            // hide all pages first
+            var pages = document.querySelectorAll('.content-inner');
+            [].forEach.call(pages, function (div) {
+                div.classList.add('hidden');
+            });
+            // show correct page
+            document.getElementById(name + '_div').classList.remove('hidden');
+
+            // remove active from other tabs
+            var tabs = document.querySelectorAll('#nav li a');
+            [].forEach.call(tabs, function (div) {
+                div.classList.remove('active');
+            });
+            // make clicked tab active
+            item.classList.add('active');
+        }
+
+        function send() {
+            // demonstrate getting field values
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var reason = document.getElementById('reason').value;
+            var feedback = document.getElementById('feedback').value;
+
+            // check all values
+            if (name === '' || email === '' || reason === '' || feedback === '') {
+                alert('Cannot be sent, all fields must be filled out.');
+
+            } else {
+                alert('Message sent!');
+
+                // reset form
+                var inputs = document.querySelectorAll('#contact_form input, #contact_form select, #contact_form textarea');
+                [].forEach.call(inputs, function (input) {
+                    input.value = '';
+                });
+            }
+            return false;
+        }
+    </script>
 </head>
 
 <body>
     <div class="container">
-        <div class="full">
-            <div class="header">
-                <img src="images/header.jpg">
+
+
+        <!-- header with AT image -->
+        <div class="header">
+            <img src="images/header.jpg">
+        </div>
+
+        <!-- nav -->
+        <ul id="nav">
+            <li><a href="javascript: void(0)" onclick="changePage('about_us', this)" class="active">About</a></li>
+            <li><a href="javascript: void(0)" onclick="changePage('fan_fiction', this)">Fan Fiction</a></li>
+            <li><a href="javascript: void(0)" onclick="changePage('contact_us', this)" class="last">Contact</a></li>
+        </ul>
+        <div class="content">
+            <div class="content-inner" id="about_us_div">
+                <h1>Welcome</h1>
+                <p>Welcome to Finn the Human and Jake the Dog's world!</p>
+
+                <h1>Subscribe</h1>
+                <form>
+                    <div class="form-inline">
+                        <input id="list" value="" type="text" placeholder="Enter your email /">
+                        <button class="btn">Sign Up</button>
+                    </div>
+                </form>
+
+                <h1>News</h1>
+                <ul class="news">
+                    <li><i class="fa-solid fa-newspaper fw-fw"></i> Added Mailing List!</li>
+                    <li><i class="fa-solid fa-newspaper fw-fw"></i>Added Contact page!</li>
+                    <li><i class="fa-solid fa-newspaper fw-fw"></i>Added Fan Fiction Page!</li>
+                    <li><i class="fa-solid fa-newspaper fw-fw"></i>Welcome to new site!</li>
+                </ul>
             </div>
 
-            <div class="content">
-                <div class="content-inner">
-                    <h1>Welcome</h1>
-                    <p>Eyahh! These jelly kinders arent... alive, are they? What? No, they cant even talk. Kick it! Thanks for helping me out guys. What are these buggers for, anyway? Oh, theyre decorations for my Biennial Gumball Ball. Tonight!</p>
-                    <p>Sounds like it gonna be large. Yes! So very large. Id like you to be there as my special guest. You want me to go with you to the ball? Heck yes. As my pal! Oh. Right. It starts at seven, so dont be late! Fionna, we got trouble! My tail is totally frizzin out! Ill check it out.</p>
-                    <h1>Its Ice Queen!</h1>
-                    <ol>
-                        <li>No! No retreat, girl.</li>
-                        <li>Hello, Fionna.</li>
-                        <li>And I see you brought Cake.</li>
-                        <li>Thats cool, right?</li>
-                        <li>Only if its cool that I brought... Lord Monochromicorn!</li>
-                    </ol>
-                    <p>The Prince shall be mine! Back inside! Outta my way, tomboy! Ice Queen, why are you always predatoring on dudes? Ha! You should to talk! Keeping all the babes to yourself, totally ice-blocking my game! What? Not this time! Gah! Slush Beast!</p>
-                    <h1>Cake! Morning-star mode!</h1>
-                    <p>You saved me from the Ice Queen! Oh, uh, yeah I guess. Is she gone? She must have fled. Fionna, youre so strong. And you look so beautiful in the snow. What are you doing later? I was just going to go home, I... Come with me. Lets go out. Go... out? Yeah. Lets go somewhere. What? Wed love to! Great! Meet me in the castle gardens in an hour! Yes, well be there!</p>
-                    <ul>
-                        <li>Hiya, gorgeous.</li>
-                        <li>H-E-Y.</li>
-                        <li>Accept these tokens of our esteem.</li>
-                        <li>Hey you didnt have to, guy...</li>
-                        <li>Nonsense. For you, Cake, a satchel of nepetalactone. Mo-Chro picked it himself.</li>
-                    </ul>
-                </div>
+            <div class="content-inner hidden" id="fan_fiction_div">
+                <h1>Fan Fiction</h1>
+                <p>Eyahh! These jelly kinders arent... alive, are they? What? No, they cant even talk. Kick it! Thanks for helping me out guys. What are these buggers for, anyway? Oh, theyre decorations for my Biennial Gumball Ball. Tonight!</p>
+                <p>Sounds like it gonna be large. Yes! So very large. Id like you to be there as my special guest. You want me to go with you to the ball? Heck yes. As my pal! Oh. Right. It starts at seven, so dont be late! Fionna, we got trouble! My tail is totally frizzin out! Ill check it out.</p>
+                <h1>Its Ice Queen!</h1>
+                <ol>
+                    <li>No! No retreat, girl.</li>
+                    <li>Hello, Fionna.</li>
+                    <li>And I see you brought Cake.</li>
+                    <li>Thats cool, right?</li>
+                    <li>Only if its cool that I brought... Lord Monochromicorn!</li>
+                </ol>
+                <p>The Prince shall be mine! Back inside! Outta my way, tomboy! Ice Queen, why are you always predatoring on dudes? Ha! You should to talk! Keeping all the babes to yourself, totally ice-blocking my game! What? Not this time! Gah! Slush Beast!</p>
+                <h1>Cake! Morning-star mode!</h1>
+                <p>You saved me from the Ice Queen! Oh, uh, yeah I guess. Is she gone? She must have fled. Fionna, youre so strong. And you look so beautiful in the snow. What are you doing later? I was just going to go home, I... Come with me. Lets go out. Go... out? Yeah. Lets go somewhere. What? Wed love to! Great! Meet me in the castle gardens in an hour! Yes, well be there!</p>
+                <ul>
+                    <li>Hiya, gorgeous.</li>
+                    <li>H-E-Y.</li>
+                    <li>Accept these tokens of our esteem.</li>
+                    <li>Hey you didnt have to, guy...</li>
+                    <li>Nonsense. For you, Cake, a satchel of nepetalactone. Mo-Chro picked it himself.</li>
+                </ul>
             </div>
+
+            <div class="content-inner hidden" id="contact_us_div">
+                <h1>Contact Us</h1>
+                <p>Use this form to send us an email!</p>
+
+                <form onsubmit="return send()" id="contact_form">
+                    <div class="form-field">
+                        <label>Name</label>
+                        <input id="name" value="" type="text" placeholder="Enter your name" />
+                    </div>
+                    <div class="form-field">
+                        <label>Email</label>
+                        <input id="email" value="" type="text" placeholder="Enter your email" />
+                    </div>
+                    <div class="form-field">
+                        <label>Reason</label>
+                        <select id="reason" value="" type="text">
+                            <option>Select Reason</option>
+                            <option>Praise</option>
+                            <option>Suggestion</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Feedback</label>
+                        <textarea id="feedback" value="" type="text" placeholder="Enter your email" rows="6"></textarea>
+                    </div>
+                    <button class="btn">Send Feedback</button>
+                </form>
+            </div>
+
         </div>
+
     </div>
 </body>
 
